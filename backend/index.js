@@ -47,11 +47,13 @@ const db = require("./dbinit/createuserinfo.cjs")
     res.status(200).json(info);
     next();
 })*/
-// should take un, email, 2 passwords
+
+
+// should take un, email, 2 passwords in json format
 app.post('/register', (req, res) => {
     res.sendStatus(200);
 });
-// should take username and password
+// should take username and password in json
 app.post('/login', (req, res) => {
     res.sendStatus(200);
 });
