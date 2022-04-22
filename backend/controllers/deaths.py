@@ -69,7 +69,7 @@ def parse(end_day: str, start_day: str) -> Dict:
                 checkValue(dpc) 
                 dataDict['countryCode'] = code
                 dataDict['num'] = dpc
-                dataDict['firstReportedDate'] = fDate
+                dataDict['reportDate1'] = fDate
                 dataList.append(dataDict)
         i += 1 
     returnDict['min'] = min
