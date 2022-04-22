@@ -3,6 +3,16 @@ from datetime import date
 from dateutil.relativedelta import relativedelta
 import requests, json
 
+# function to get oldest date of data
+def getFDate(i: int, end_day: str) -> str:
+    fDate: str = ""
+    while str(data['date'][i]) != end_day:
+        i = i - 1
+    if str(data['date'][i]) == end_day:
+        i = i + 1
+    fDate = str(data['date'][i])
+    return fDate
+
 # function to get country code
 def getCode(name: str) -> str:
     j: int = 0
@@ -36,17 +46,20 @@ def checkValue (dpc: float):
 
 # function to parse through mega JSON with all death data
 def parse(end_day: str, start_day: str) -> Dict:
-    dataDict: Dict [str, float] = {} 
+    dataList = []
     returnDict: Dict = {}
     i: int = 0
     start_deaths: int = 0
     end_deaths: int = 0
+    fDate: str =  start_day
     while i <= len(data['location']) - 1:
+        dataDict: Dict = {} 
         if str(data['date'][i]) == start_day: 
             start_deaths = data['total_deaths'][i] # get deaths at specified beginning date
         if str(data['date'][i]) == end_day:
-            end_deaths = data['total_deaths'][i] # get deaths at specified beginning date
+            end_deaths = data['total_deaths'][i] # get deaths at specified end date
             name = data['location'][i] # get name, country code, deaths in specified time, and death per capita
+            fDate = getFDate(i - 1, end_day)
             code = getCode(name)
             if code != "":
                 deaths = end_deaths - start_deaths 
@@ -54,11 +67,14 @@ def parse(end_day: str, start_day: str) -> Dict:
                     deaths = end_deaths # if deaths less than 0, we don't have enough data. Use total deaths instead
                 dpc = getDPC(name, deaths)
                 checkValue(dpc) 
-                dataDict[code] = dpc 
+                dataDict['countryCode'] = code
+                dataDict['num'] = dpc
+                dataDict['firstReportedDate'] = fDate
+                dataList.append(dataDict)
         i += 1 
     returnDict['min'] = min
     returnDict['max'] = max
-    returnDict['data'] = dataDict 
+    returnDict['data'] = dataList
     return returnDict 
 
 def main() -> Dict:
@@ -92,6 +108,7 @@ def main() -> Dict:
     start_day = end_day - relativedelta(days=30)
     finalDict['last30Days'] = parse(str(end_day), str(start_day));
 
+    # print(finalDict)
     return finalDict
 
 if __name__ == "__main__":
