@@ -24,7 +24,7 @@ def getCode(name: str) -> str:
     return code
 
 # function to get Death Per Capita
-def getDPC(name: str, deaths: int) -> float:
+#def getDPC(name: str, deaths: int) -> float:
     j: int = 0
     dpc: float = 0
     population: int = 1
@@ -36,13 +36,13 @@ def getDPC(name: str, deaths: int) -> float:
     return dpc
 
 # Function that updates min and max values
-def checkValue (dpc: float):
+def checkValue (dpm: float):
     global max
     global min
-    if dpc > max:
-        max = dpc
-    if dpc < min:
-        min = dpc
+    if dpm > max:
+        max = dpm
+    if dpm < min:
+        min = dpm
 
 # function to parse through mega JSON with all death data
 def parse(end_day: str, start_day: str) -> Dict:
@@ -55,9 +55,9 @@ def parse(end_day: str, start_day: str) -> Dict:
     while i <= len(data['location']) - 1:
         dataDict: Dict = {} 
         if str(data['date'][i]) == start_day: 
-            start_deaths = data['total_deaths'][i] # get deaths at specified beginning date
+            start_deaths = data['total_deaths_per_million'][i] # get deaths at specified beginning date
         if str(data['date'][i]) == end_day:
-            end_deaths = data['total_deaths'][i] # get deaths at specified end date
+            end_deaths = data['total_deaths_per_million'][i] # get deaths at specified end date
             name = data['location'][i] # get name, country code, deaths in specified time, and death per capita
             fDate = getFDate(i - 1, end_day)
             code = getCode(name)
@@ -65,10 +65,10 @@ def parse(end_day: str, start_day: str) -> Dict:
                 deaths = end_deaths - start_deaths 
                 if deaths < 0:
                     deaths = end_deaths # if deaths less than 0, we don't have enough data. Use total deaths instead
-                dpc = getDPC(name, deaths)
-                checkValue(dpc) 
+                #dpc = getDPC(name, deaths)
+                checkValue(deaths) 
                 dataDict['countryCode'] = code
-                dataDict['num'] = dpc
+                dataDict['num'] = deaths
                 dataDict['reportDate1'] = fDate
                 dataList.append(dataDict)
         i += 1 
@@ -88,40 +88,40 @@ def main() -> Dict:
     finalDict['allTime'] = parse(str(end_day), str(start_day));
 
     max = 0.0 # reset min and max after every new parsing data call
-    min = 1.0
+    min = 100.0
 
     end_day = date.today() - relativedelta(days=1)
     start_day = end_day - relativedelta(years=1)
     finalDict['lastYear'] = parse(str(end_day), str(start_day));
 
     max = 0.0
-    min = 1.0
+    min = 100.0
 
     end_day = date.today() - relativedelta(days=1)
     start_day = end_day - relativedelta(months=6)
     finalDict['last6Months'] = parse(str(end_day), str(start_day));
 
     max = 0.0
-    min = 1.0
+    min = 100.0
 
     end_day = date.today() - relativedelta(days=1)
     start_day = end_day - relativedelta(days=30)
     finalDict['last30Days'] = parse(str(end_day), str(start_day));
 
-    # print(finalDict)
+    print(finalDict)
     return finalDict
 
 if __name__ == "__main__":
     max: float = 0.0
-    min: float = 1.0 # set up max and min variables
+    min: float = 100.0 # set up max and min variables
     
     url = requests.get("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/internal/megafile--deaths.json")
     text = url.text 
     data = json.loads(text) # read in death data JSON
 
-    url2 = requests.get("https://raw.githubusercontent.com/samayo/country-json/master/src/country-by-population.json")
-    text2 = url2.text
-    populations = json.loads(text2) # read in population data JSON
+    #url2 = requests.get("https://raw.githubusercontent.com/samayo/country-json/master/src/country-by-population.json")
+    #text2 = url2.text
+    #populations = json.loads(text2) # read in population data JSON
 
     url3 = requests.get("https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.json")
     text3 = url3.text
