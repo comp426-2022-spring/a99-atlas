@@ -54,6 +54,7 @@ def parse(end_day: str, start_day: str) -> Dict:
     fDate: str =  start_day
     while i <= len(data['location']) - 1:
         dataDict: Dict = {} 
+        codeDict: Dict = {}
         if str(data['date'][i]) == start_day: 
             start_deaths = data['total_deaths_per_million'][i] # get deaths at specified beginning date
         if str(data['date'][i]) == end_day:
@@ -67,10 +68,11 @@ def parse(end_day: str, start_day: str) -> Dict:
                     deaths = end_deaths # if deaths less than 0, we don't have enough data. Use total deaths instead
                 #dpc = getDPC(name, deaths)
                 checkValue(deaths) 
-                dataDict['countryCode'] = code
+                dataDict['name'] = name
                 dataDict['num'] = deaths
                 dataDict['reportDate1'] = fDate
-                dataList.append(dataDict)
+                codeDict[code] = dataDict
+                dataList.append(codeDict)
         i += 1 
     returnDict['min'] = min
     returnDict['max'] = max
