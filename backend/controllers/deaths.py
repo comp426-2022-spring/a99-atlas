@@ -25,15 +25,15 @@ def getCode(name: str) -> str:
 
 # function to get Death Per Capita
 #def getDPC(name: str, deaths: int) -> float:
-    j: int = 0
-    dpc: float = 0
-    population: int = 1
-    while j < len(populations):
-        if populations[j]['country'] == name:
-            population = populations[j]['population']
-        j += 1
-    dpc = deaths / population
-    return dpc
+#    j: int = 0
+#    dpc: float = 0
+#    population: int = 1
+#    while j < len(populations):
+#        if populations[j]['country'] == name:
+#            population = populations[j]['population']
+#        j += 1
+#    dpc = deaths / population
+#    return dpc
 
 # Function that updates min and max values
 def checkValue (dpm: float):
@@ -108,7 +108,7 @@ def main() -> Dict:
     start_day = end_day - relativedelta(days=30)
     finalDict['last30Days'] = parse(str(end_day), str(start_day));
 
-    print(finalDict)
+    #print(finalDict)
     return finalDict
 
 if __name__ == "__main__":
