@@ -23,12 +23,12 @@ const rounded = (num) => {
   }
 };
 
-const colorScale = scaleLinear()
-  .domain([0.29, 0.68])
-  .range(["#ffedea", "#ff5233"]);
-
 const MapChart = ({ setTooltipContent }) => {
   const [data, setData] = useState([]);
+
+  const colorScale = scaleLinear()
+  .domain([0.29, 0.68])
+  .range(["#ffedea", "#ff5233"]);
 
   useEffect(() => {
     csv(`/vulnerability.csv`).then((data) => {
@@ -51,6 +51,8 @@ const MapChart = ({ setTooltipContent }) => {
                     <Geography
                       key={geo.rsmKey}
                       geography={geo}
+                      stroke="#ff5233"
+                      strokeWidth={0.03}
                       onMouseEnter={() => {
                         const { NAME, POP_EST } = geo.properties;
                         setTooltipContent(`${NAME} — ${rounded(POP_EST)}`);
