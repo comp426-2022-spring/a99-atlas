@@ -44,7 +44,7 @@ def checkValue (vpm: float):
     if vpm < min:
         min = vpm
 
-# function to parse through mega JSON with all death data
+# function to parse through mega JSON with all vax data
 def parse(end_day: str, start_day: str) -> Dict:
     dataList = []
     returnDict: Dict = {}
@@ -56,18 +56,21 @@ def parse(end_day: str, start_day: str) -> Dict:
         dataDict: Dict = {} 
         codeDict: Dict = {}
         if str(data['date'][i]) == start_day: 
-            start_vacc = data['total_vaccinations_per_hundred'][i] # get deaths at specified beginning date
+            start_vacc = data['total_vaccinations_per_hundred'][i] # get vax at specified beginning date
         if str(data['date'][i]) == end_day:
-            end_vacc = data['total_vaccinations_per_hundred'][i] # get deaths at specified end date
-            name = data['location'][i] # get name, country code, deaths in specified time, and death per capita
+            end_vacc = data['total_vaccinations_per_hundred'][i] # get vax at specified end date
+            name = data['location'][i] # get name, country code, vax in specified time, and death per capita
             fDate = getFDate(i - 1, end_day)
             code = getCode(name)
             if code != "":
-                vax = end_vacc - start_vacc 
-                if vax < 0:
-                    vax = end_vacc # if deaths less than 0, we don't have enough data. Use total deaths instead
+                try:
+                    vax = end_vacc - start_vacc 
+                    if vax < 0:
+                        vax = end_vacc # if vax less than 0, we don't have enough data. Use total deaths instead
+                except:
+                    vax = 0
                 #dpc = getDPC(name, deaths)
-                checkValue(vax) 
+                checkValue(vax)
                 dataDict['name'] = name
                 dataDict['num'] = vax
                 dataDict['reportDate1'] = fDate
