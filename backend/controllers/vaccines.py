@@ -1,15 +1,132 @@
 from typing import Dict
-import json
+from datetime import date
+from dateutil.relativedelta import relativedelta
+import requests, json
 
-# Get link to API
-def pull_data(link) -> Dict:
-    ...
+# function to get oldest date of data
+def getFDate(i: int, end_day: str) -> str:
+    fDate: str = ""
+    while str(data['date'][i]) != end_day:
+        i = i - 1
+    if str(data['date'][i]) == end_day:
+        i = i + 1
+    fDate = str(data['date'][i])
+    return fDate
 
+# function to get country code
+def getCode(name: str) -> str:
+    j: int = 0
+    code: str = ""
+    while j < len(codes):
+        if codes[j]['name'] == name:
+            code = codes[j]['alpha-3']
+        j += 1
+    return code
 
-# Run a for loop through API
-# Find min and max for 30-day, 6-month, last year, and all time
-# Keep total count lists for 30-day, 6-month, last year, and all time
-# i.e. list[0] = {30-day, 6-month, year, all_time} -- Afghanistan
+# function to get Death Per Capita
+#def getDPC(name: str, deaths: int) -> float:
+#    j: int = 0
+#    dpc: float = 0
+#    population: int = 1
+#    while j < len(populations):
+#        if populations[j]['country'] == name:
+#            population = populations[j]['population']
+#        j += 1
+#    dpc = deaths / population
+#    return dpc
 
-def update_data(data_obj):
-    ...
+# Function that updates min and max values
+def checkValue (vpm: float):
+    global max
+    global min
+    if vpm > max:
+        max = vpm
+    if vpm < min:
+        min = vpm
+
+# function to parse through mega JSON with all death data
+def parse(end_day: str, start_day: str) -> Dict:
+    dataList = []
+    returnDict: Dict = {}
+    i: int = 0
+    start_vacc: int = 0
+    end_vacc: int = 0
+    fDate: str =  start_day
+    while i <= len(data['location']) - 1:
+        dataDict: Dict = {} 
+        codeDict: Dict = {}
+        if str(data['date'][i]) == start_day: 
+            start_vacc = data['total_vaccinations_per_hundred'][i] # get deaths at specified beginning date
+        if str(data['date'][i]) == end_day:
+            end_vacc = data['total_vaccinations_per_hundred'][i] # get deaths at specified end date
+            name = data['location'][i] # get name, country code, deaths in specified time, and death per capita
+            fDate = getFDate(i - 1, end_day)
+            code = getCode(name)
+            if code != "":
+                vax = end_vacc - start_vacc 
+                if vax < 0:
+                    vax = end_vacc # if deaths less than 0, we don't have enough data. Use total deaths instead
+                #dpc = getDPC(name, deaths)
+                checkValue(vax) 
+                dataDict['name'] = name
+                dataDict['num'] = vax
+                dataDict['reportDate1'] = fDate
+                codeDict[code] = dataDict
+                dataList.append(codeDict)
+        i += 1 
+    returnDict['min'] = min
+    returnDict['max'] = max
+    returnDict['data'] = dataList
+    return returnDict 
+
+def main() -> Dict:
+
+    finalDict: Dict = {}
+    global min
+    global max
+    
+    end_day = date.today() - relativedelta(days=1)
+    start_day = "Beginning"
+    finalDict['allTime'] = parse(str(end_day), str(start_day))
+
+    max = 0.0 # reset min and max after every new parsing data call
+    min = 100.0
+
+    end_day = date.today() - relativedelta(days=1)
+    start_day = end_day - relativedelta(years=1)
+    finalDict['lastYear'] = parse(str(end_day), str(start_day))
+
+    max = 0.0
+    min = 100.0
+
+    end_day = date.today() - relativedelta(days=1)
+    start_day = end_day - relativedelta(months=6)
+    finalDict['last6Months'] = parse(str(end_day), str(start_day))
+
+    max = 0.0
+    min = 100.0
+
+    end_day = date.today() - relativedelta(days=1)
+    start_day = end_day - relativedelta(days=30)
+    finalDict['last30Days'] = parse(str(end_day), str(start_day))
+
+    #print(finalDict)
+    return finalDict
+
+if __name__ == "__main__":
+    max: float = 0.0
+    min: float = 100.0 # set up max and min variables
+    
+    url = requests.get("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/internal/megafile--vaccinations.json")
+    text = url.text 
+    data = json.loads(text) # read in vaccine data JSON
+
+    #url2 = requests.get("https://raw.githubusercontent.com/samayo/country-json/master/src/country-by-population.json")
+    #text2 = url2.text
+    #populations = json.loads(text2) # read in population data JSON
+
+    url3 = requests.get("https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.json")
+    text3 = url3.text
+    codes = json.loads(text3) # read in country code data JSON
+
+    main()
