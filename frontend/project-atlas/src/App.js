@@ -1,8 +1,8 @@
 import './App.css';
 import { useState } from 'react';
-import MapChart from './Components/MapChart';
+import MapChart from './components/MapChart';
 import ReactTooltip from "react-tooltip";
-import AppBar from './Components/AppBar';
+import AppBar from './components/AppBar';
 
 function App() {
   const [content, setContent] = useState("");
