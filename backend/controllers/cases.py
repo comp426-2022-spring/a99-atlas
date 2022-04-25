@@ -43,20 +43,19 @@ def parse(end_day: str, start_day: str) -> Dict:
         dataDict: Dict = {} 
         codeDict: Dict = {}
         if str(data['date'][i]) == start_day: 
-            start_cases = data['total_cases_per_million'][i] # get deaths at specified beginning date
+            start_cases = data['total_cases_per_million'][i] # get cases at specified beginning date
         if str(data['date'][i]) == end_day:
-            end_cases = data['total_cases_per_million'][i] # get deaths at specified end date
-            name = data['location'][i] # get name, country code, deaths in specified time, and death per capita
+            end_cases = data['total_cases_per_million'][i] # get cases at specified end date
+            name = data['location'][i] # get name, country code, cases in specified time
             fDate = getFDate(i - 1, end_day)
             code = getCode(name)
             if code != "":
                 try:
                     cases = end_cases - start_cases 
                     if cases < 0:
-                        cases = end_cases # if deaths less than 0, we don't have enough data. Use total deaths instead
+                        cases = end_cases # if cases less than 0, we don't have enough data. Use total cases instead
                 except:
                     cases = 0
-                #dpc = getDPC(name, deaths)
                 checkValue(cases) 
                 dataDict['name'] = name
                 dataDict['num'] = cases
@@ -109,11 +108,7 @@ if __name__ == "__main__":
     
     url = requests.get("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/internal/megafile--cases-tests.json")
     text = url.text 
-    data = json.loads(text) # read in death data JSON
-
-    #url2 = requests.get("https://raw.githubusercontent.com/samayo/country-json/master/src/country-by-population.json")
-    #text2 = url2.text
-    #populations = json.loads(text2) # read in population data JSON
+    data = json.loads(text) # read in cases data JSON
 
     url3 = requests.get("https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.json")
     text3 = url3.text
