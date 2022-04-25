@@ -78,7 +78,7 @@ def parse(end_day: str, start_day: str) -> Dict:
                 dataList.append(codeDict)
         i += 1 
     returnDict['min'] = min
-    returnDict['max'] = max
+    returnDict['max'] = max 
     returnDict['data'] = dataList
     return returnDict 
 
