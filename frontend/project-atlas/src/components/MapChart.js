@@ -55,7 +55,8 @@ const MapChart = ({ setTooltipContent }) => {
                       strokeWidth={0.03}
                       onMouseEnter={() => {
                         const { NAME, POP_EST } = geo.properties;
-                        setTooltipContent(`${NAME} — ${rounded(POP_EST)}`);
+                        let content = `${NAME} — ${rounded(POP_EST)}`;
+                        setTooltipContent(content);
                       }}
                       onMouseLeave={() => {
                         setTooltipContent("");
