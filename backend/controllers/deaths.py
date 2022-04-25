@@ -110,7 +110,7 @@ def main() -> Dict:
     start_day = end_day - relativedelta(days=30)
     finalDict['last30Days'] = parse(str(end_day), str(start_day));
 
-    #print(finalDict)
+    print(finalDict)
     return finalDict
 
 if __name__ == "__main__":
