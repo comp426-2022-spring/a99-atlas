@@ -28,6 +28,10 @@
   color: #61dafb;
 }
 
+.appbar {
+  align-items: 'center',
+}
+
 .map {
   padding: 10px;
 }
