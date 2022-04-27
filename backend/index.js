@@ -9,13 +9,36 @@ const args = require('minimist')(process.argv.slice(2))
 
 const port = args['port'] || 5555
 
-const db = require("./database/createuserinfo.cjs")
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const { spawn } = require('child_process');
+
+// const db = require("./database/createuserinfo.cjs")
 
 const server = app.listen(port, () => {
     console.log('Backend listening on port %PORT%'.replace('%PORT%',port))
 });
 
 app.use(express.urlencoded({ extended: true}));
+
+app.use(cookieParser());
+
+const countrytable = spawn("python3", ["controllers/countrytable.py"]);
+
+const casesscript = spawn("python3", ["controllers/cases.py"]);
+casesscript.stderr.on('data', (data) => {
+    console.error(`child stderr:\n${data}`);
+})  
+
+const deathscript = spawn("python3", ["controllers/deaths.py"]);
+deathscript.stderr.on('data', (data) => {
+    console.error(`child stderr:\n${data}`);
+}) 
+
+const vaccscript = spawn("python3", ["controllers/vaccines.py"]);
+vaccscript.stderr.on('data', (data) => {
+    console.error(`child stderr:\n${data}`);
+}) 
 
 /*app.use( (req, res, next) => {
     let logdata = {
@@ -49,8 +72,7 @@ app.use(express.urlencoded({ extended: true}));
     res.status(200).json(info);
     next();
 })*/
-
-// var userroutes = require('./routes/userroutes.cjs');
+var userroutes = require('./routes/userroutes.cjs');
 
 app.use(express.json());
 
@@ -58,46 +80,47 @@ app.use(express.json());
 // console.log(stmt);
 
 
-const crypto = require('crypto');
-const { appendFile } = require("fs");
+// const crypto = require('crypto');
+// const { appendFile } = require("fs");
 
-// should take un, email, 2 passwords in json format
-app.post('/register', (req, res) => {
-    const {email, password, cPassword} = req.body;
+// // should take un, email, 2 passwords in json format
+// app.post('/register', (req, res) => {
+//     const {email, password, cPassword} = req.body;
 
-    if (password === cPassword) {
-        try{
-            const stmt = db.prepare(`SELECT email FROM userinfo WHERE email = ('${email}')`);
-            const exist = stmt.run();
-            if (exist.length != 0) {
-                res.status(400).send("Email already in use.");
-            }
-        } catch (e) {
-            console.error(e)
-        }
+//     if (password === cPassword) {
+//         try{
+//             const stmt = db.prepare(`SELECT email FROM userinfo WHERE email = ('${email}')`);
+//             const exist = stmt.run();
+//             if (exist.length != 0) {
+//                 res.status(400).send("Email already in use.");
+//             }
+//         } catch (e) {
+//             console.error(e)
+//         }
 
-        const hashedPw = getHashedPassword(password);
+//         const hashedPw = getHashedPassword(password);
 
-        const adduser = db.prepare(`INSERT INTO userinfo (email, password) VALUES ('${email}','${hashedPw}')`);
-        const user = adduser.run();
+//         const adduser = db.prepare(`INSERT INTO userinfo (email, password) VALUES ('${email}','${hashedPw}')`);
+//         const user = adduser.run();
 
-        res.status(201).json(user);
-    } else {
-        res.status(400).send("Passwords do not match");
-    }
-});
-// should take username and password in json
-app.post('/login', (req, res) => {
-    res.sendStatus(200);
-});
+//         res.status(201).json(user);
+//     } else {
+//         res.status(400).send("Passwords do not match");
+//     }
+// });
+// // should take username and password in json
+// app.post('/login', (req, res) => {
+//     res.sendStatus(200);
+// });
 
-const getHashedPassword = (password) => {
-    const sha256 = crypto.createHash('sha256');
-    const hash = sha256.update(password).digest('base64');
-    return hash;
-}
+// const getHashedPassword = (password) => {
+//     const sha256 = crypto.createHash('sha256');
+//     const hash = sha256.update(password).digest('base64');
+//     return hash;
+// }
 
-
+app.use('',userroutes);
+ 
 process.on('SIGTERM', () => {
     server.close(( )=> {
         console.log('Server stopped')

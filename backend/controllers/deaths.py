@@ -1,6 +1,7 @@
 from typing import Dict
 from datetime import date
 from dateutil.relativedelta import relativedelta
+from importdata import dbimport
 import requests, json
 
 # function to get oldest date of data
@@ -110,7 +111,7 @@ def main() -> Dict:
     start_day = end_day - relativedelta(days=30)
     finalDict['last30Days'] = parse(str(end_day), str(start_day));
 
-    #print(finalDict)
+    # print(finalDict)
     return finalDict
 
 if __name__ == "__main__":
@@ -129,4 +130,5 @@ if __name__ == "__main__":
     text3 = url3.text
     codes = json.loads(text3) # read in country code data JSON
 
-    main()
+    finaljson = main()
+    dbimport(finaljson, "deaths")

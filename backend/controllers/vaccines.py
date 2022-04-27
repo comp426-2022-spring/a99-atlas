@@ -1,6 +1,7 @@
 from typing import Dict
 from datetime import date
 from dateutil.relativedelta import relativedelta
+from importdata import dbimport
 import requests, json
 
 # function to get oldest date of data
@@ -131,4 +132,5 @@ if __name__ == "__main__":
     text3 = url3.text
     codes = json.loads(text3) # read in country code data JSON
 
-    main()
+    finaljson = main()
+    dbimport(finaljson, "vacc")
