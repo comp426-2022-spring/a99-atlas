@@ -1,6 +1,6 @@
 const Database = require('better-sqlite3');
 
-const db = new Database('data/atlas.db');
+const db = new Database('database/atlas.db');
 
 const stmt = db.prepare(`
     SELECT name FROM sqlite_master WHERE type='table' AND (name='userinfo' OR name='loginhistory');
@@ -12,7 +12,6 @@ if (row === undefined) {
     console.log('Database empty. Will now be initialized.');
     const sqlInit = `
         CREATE TABLE userinfo (id INTEGER PRIMARY KEY,
-            username TEXT,
             email TEXT,
             password TEXT);
     `;
@@ -21,16 +20,14 @@ if (row === undefined) {
 
     const sqlInit2 = `
         CREATE TABLE loginhistory (id INTEGER PRIMARY KEY,
-            username TEXT,
+            email TEXT,
             dt DATETIME
             );
     `;
     db.exec(sqlInit2);
-    console.log('Created loginhistory table.');
+    console.log('Created userinfo and loginhistory table.');
 } else {
     console.log('Database exists.');
 }
 
-module.exports = {
-    db
-};
+module.exports = db;

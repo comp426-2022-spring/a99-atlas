@@ -1,0 +1,18 @@
+import sqlite3
+print("adsf")
+conn = sqlite3.connect('database/atlas.db')
+c = conn.cursor()
+
+c.execute("CREATE TABLE IF NOT EXISTS cases (time TEXT, data TEXT)")
+conn.commit()
+c.execute("CREATE TABLE IF NOT EXISTS deaths (time TEXT, data TEXT)")
+conn.commit()
+c.execute("CREATE TABLE IF NOT EXISTS vaccinations (time TEXT, data TEXT)")
+conn.commit()
+c.execute("DELETE FROM cases")
+conn.commit()
+c.execute("DELETE FROM deaths")
+conn.commit()
+c.execute("DELETE FROM vaccinations")
+conn.commit()
+conn.close()
