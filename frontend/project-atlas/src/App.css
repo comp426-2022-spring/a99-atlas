@@ -28,8 +28,19 @@
   color: #61dafb;
 }
 
+.appbar {
+  align-items: 'center',
+}
+
 .map {
   padding: 10px;
+}
+
+.app-title {
+  text-align: center;
+  font-size: 32px;
+  padding-top: 15px;
+  padding-bottom: 5px;
 }
 
 @keyframes App-logo-spin {
