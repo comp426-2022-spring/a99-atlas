@@ -88,7 +88,9 @@ Back-end packages used:
 5. crypto
 6. better-sqlite3
 7. sqlite3
-8. python3 (language used to pull data)
+8. python3 (requirement)
 
 Front-end packages used:
 1. ????
+
+Run using node index.js
