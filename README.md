@@ -63,7 +63,7 @@ All the rest of the assignment instructions are available at: https://comp426.jo
 Good skill and be creative!
 
 ## Notes:
-# Roles:
+### Roles:
 1. Review Manager: Kush, Liam
 2. Plan Manager: Kunal
 3. Documentation Manager: Kunal
@@ -79,5 +79,5 @@ Good skill and be creative!
 ## Project Description:
 This project is a functional website that displays historical COVID-19 per-capita statistics across the world. Statistics displayed by our program include cases, total deaths, and vaccination data. We pulled all our data from regularly updated json files listed under this public GitHub repository: https://github.com/owid/covid-19-data/tree/master/public/data
 
-# Installation Requirements:
+### Installation Requirements:
 ??????
