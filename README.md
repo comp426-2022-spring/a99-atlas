@@ -61,3 +61,23 @@ And that is about all you need to get started.
 All the rest of the assignment instructions are available at: https://comp426.johndmart.in/a/99
 
 Good skill and be creative!
+
+## Notes:
+# Roles:
+Review Manager: Kush, Liam
+Plan Manager: Kunal
+Documentation Manager: Kunal
+Release Team: Kush, Liam, Kunal, Nathan, Kaan
+Project Manager: Kush
+Front-end Lead: Kush
+Back-end Lead: Liam
+Database Lead: Nathan
+Testing Team: Nathan, Kaan
+Miscellaneous Lead: Kaan
+Research Team: Kaan, Liam, Nathan
+
+## Project Description:
+This project is a functional website that displays historical COVID-19 per-capita statistics across the world. Statistics displayed by our program include cases, total deaths, and vaccination data. We pulled all our data from regularly updated json files listed under this public GitHub repository: https://github.com/owid/covid-19-data/tree/master/public/data
+
+# Installation Requirements:
+??????
