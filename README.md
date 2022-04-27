@@ -64,17 +64,17 @@ Good skill and be creative!
 
 ## Notes:
 # Roles:
-Review Manager: Kush, Liam
-Plan Manager: Kunal
-Documentation Manager: Kunal
-Release Team: Kush, Liam, Kunal, Nathan, Kaan
-Project Manager: Kush
-Front-end Lead: Kush
-Back-end Lead: Liam
-Database Lead: Nathan
-Testing Team: Nathan, Kaan
-Miscellaneous Lead: Kaan
-Research Team: Kaan, Liam, Nathan
+1. Review Manager: Kush, Liam
+2. Plan Manager: Kunal
+3. Documentation Manager: Kunal
+4. Release Team: Kush, Liam, Kunal, Nathan, Kaan
+5. Project Manager: Kush
+6. Front-end Lead: Kush
+7. Back-end Lead: Liam
+8. Database Lead: Nathan
+9. Testing Team: Nathan, Kaan
+10. Miscellaneous Lead: Kaan
+11. Research Team: Kaan, Liam, Nathan
 
 ## Project Description:
 This project is a functional website that displays historical COVID-19 per-capita statistics across the world. Statistics displayed by our program include cases, total deaths, and vaccination data. We pulled all our data from regularly updated json files listed under this public GitHub repository: https://github.com/owid/covid-19-data/tree/master/public/data
