@@ -17,9 +17,8 @@ const { json } = require("body-parser");
 
 // should take un, email, 2 passwords in json format
 router.post('/register', (req, res) => {
-    const {email, password, cPassword} = req.body;
+    const {email, password} = req.body;
 
-    if (password === cPassword) {
         try{
             const stmt = db.prepare(`SELECT email FROM userinfo WHERE email = ('${email}')`).all();
 
@@ -37,9 +36,6 @@ router.post('/register', (req, res) => {
         } catch (e) {
             console.error(e)
         }
-    } else {
-        res.status(400).send("Passwords do not match");
-    }
 });
 // should take username and password in json
 const authTokens = {};
@@ -58,8 +54,9 @@ router.post('/login', (req, res) => {
 
         authTokens[authToken] = user;
         res.cookie('AuthToken', authToken);
+        res.status(200)
 
-        res.redirect('/protected');
+        // res.redirect('/protected');
     } else {
         res.status(400).send("Invalid email or password");
     }
