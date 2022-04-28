@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -17,13 +17,33 @@ const style = {
 };
 
 export const SignIn = ({ setUID, toggleSignIn }) => {
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    const email = data.get('email');
+    const password = data.get('password');
+
+    let hasError = false;
+    if (email === "") {
+      setEmailError("Email is required");
+      hasError = true;
+    }
+    if (password === "") {
+      setPasswordError("Password is required");
+      hasError = true;
+    }
+
+    if (!hasError) {
+      console.log({
+        email: data.get('email'),
+        password: data.get('password')
+      });
+    }
   };
 
   return (
@@ -41,7 +61,7 @@ export const SignIn = ({ setUID, toggleSignIn }) => {
               Sign in
             </Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-              <TextField
+            <TextField
                 margin="normal"
                 required
                 fullWidth
@@ -50,6 +70,8 @@ export const SignIn = ({ setUID, toggleSignIn }) => {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                error={emailError !== ""}
+                helperText={emailError}
               />
               <TextField
                 margin="normal"
@@ -60,6 +82,8 @@ export const SignIn = ({ setUID, toggleSignIn }) => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                error={passwordError !== ""}
+                helperText={passwordError}
               />
               <Button
                 type="submit"

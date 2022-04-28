@@ -17,7 +17,9 @@ const style = {
 };
 
 export const SignUp = ({ setUID, toggleSignIn }) => {
-  const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmError, setConfirmError] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -27,21 +29,27 @@ export const SignUp = ({ setUID, toggleSignIn }) => {
     const password = data.get('password');
     const confirmPass = data.get('confirm-password');
 
-    let newError = "";
-    if (confirmPass === password) {
-      
+    let hasError = false;
+    if (email === "") {
+      setEmailError("Email is required");
+      hasError = true;
+    }
+    if (password === "") {
+      setPasswordError("Password is required");
+      hasError = true;
+    }
+    if (confirmPass !== password) {
+      setConfirmError("Passwords do not match");
+      hasError = true;
+    }
+
+    if (!hasError) {
       console.log({
         email: data.get('email'),
         password: data.get('password'),
         confirm_password: data.get('confirm-password')
       });
-
-      
-    } else {
-      newError = "confirm-pass"
     }
-
-    setError(newError);
   };
 
   return (
@@ -68,6 +76,8 @@ export const SignUp = ({ setUID, toggleSignIn }) => {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                error={emailError !== ""}
+                helperText={emailError}
               />
               <TextField
                 margin="normal"
@@ -78,6 +88,8 @@ export const SignUp = ({ setUID, toggleSignIn }) => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                error={passwordError !== ""}
+                helperText={passwordError}
               />
               <TextField
                 margin="normal"
@@ -88,8 +100,8 @@ export const SignUp = ({ setUID, toggleSignIn }) => {
                 type="password"
                 id="confirm-password"
                 autoComplete="confirm-current-password"
-                error={error === "confirm-pass"}
-                helperText={error === "confirm-pass" ? "Passwords do not match" : ""}
+                error={confirmError !== ""}
+                helperText={confirmError}
               />
               <Button
                 type="submit"
