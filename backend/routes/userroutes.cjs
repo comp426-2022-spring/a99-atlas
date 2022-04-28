@@ -22,15 +22,15 @@ router.post('/register', (req, res) => {
     try{
         const stmt = db.prepare(`SELECT email FROM userinfo WHERE email = ('${email}')`).all();
 
-        console.log(stmt);
         if (stmt.length != 0) {
             res.status(400).send("Email already in use.");
         } else {
             const hashedPw = getHashedPassword(password);
 
-            const adduser = db.prepare(`INSERT INTO userinfo (email, password) VALUES ('${email}','${hashedPw}')`).run();
+            var nanoid = crypto.randomBytes(5).toString('hex');
+            const adduser = db.prepare(`INSERT INTO userinfo (email, nanoid, password) VALUES ('${email}','${nanoid}','${hashedPw}')`).run();
 
-            res.status(200).json(adduser);
+            res.status(200).send(nanoid);
         }
     } catch (e) {
         console.error(e)
@@ -46,7 +46,9 @@ router.post('/login', (req, res) => {
     const user = db.prepare(`SELECT * FROM userinfo WHERE (email = '${email}' AND password = '${hashedPw}')`).all();
 
     if (user.length > 0) {
-        res.status(200).send("Logged in");
+        var nanoid = db.prepare(`SELECT nanoid FROM userinfo WHERE (email = '${email}' AND password = '${hashedPw}')`).all();
+        // console.log(nanoid);
+        res.status(200).send(nanoid);
     } else {
         res.status(400).send("Invalid email or password");
     }
