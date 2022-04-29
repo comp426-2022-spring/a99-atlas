@@ -38,8 +38,8 @@ const MapChart = ({ setTooltipContent }) => {
   
   return (
     <>
-      <ComposableMap data-tip="" height="400" projectionConfig={{ rotate: [-10, 0, 0], scale: 140 }}>
-        <ZoomableGroup>
+      <ComposableMap data-tip="" height="390" projectionConfig={{ rotate: [-10, 0, 0], scale: 140 }}>
+        <ZoomableGroup center={[0,-2]}>
           <Sphere stroke="#E4E5E6" strokeWidth={0.5} />
           <Graticule stroke="#E4E5E6" strokeWidth={0.5} />
           {data.length > 0 && (
