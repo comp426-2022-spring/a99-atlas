@@ -1,33 +1,13 @@
-const db = require("./createuserinfo.cjs")
+const db = require('database/atlas.db');
 
 const stmt = db.prepare(`
-    SELECT name FROM sqlite_master WHERE type='table' AND name='loginhistory';
+    SELECT name FROM sqlite_master WHERE type='table' AND name='accesslog';
 `);
 
 let row = stmt.get();
 
 if (row === undefined) {
-    console.log('Database empty. Will now be initialized.');
-    const sqlInit = `
-        CREATE TABLE loginhistory (id INTEGER PRIMARY KEY,
-            username TEXT,
-            dt DATETIME
-            );
-    `;
-    db.exec(sqlInit);
-    console.log('Created loginhistory table.');
-} else {
-    console.log('loginhistory exists.');
-}
-
-const stmt2 = db.prepare(`
-    SELECT name FROM sqlite_master WHERE type='table' AND name='accesslog';
-`);
-
-let row2 = stmt.get();
-
-if (row2 === undefined) {
-    console.log('Database empty. Will now be initialized.');
+    console.log('Access log empty. Will now be initialized.');
     const sqlInit = `
         CREATE TABLE accesslog (id INTEGER PRIMARY KEY,
             remoteaddr TEXT,
@@ -43,7 +23,7 @@ if (row2 === undefined) {
             useragent TEXT);
     `;
     db.exec(sqlInit);
-    console.log('Access log is now initialized.');
+    console.log('Access log now initialized.');
 } else {
     console.log('Access log exists.');
 }
