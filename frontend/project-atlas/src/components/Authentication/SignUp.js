@@ -21,7 +21,7 @@ export const SignUp = ({ setUID, toggleSignIn }) => {
   const [passwordError, setPasswordError] = useState("");
   const [confirmError, setConfirmError] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     
@@ -33,24 +33,43 @@ export const SignUp = ({ setUID, toggleSignIn }) => {
     if (email === "") {
       setEmailError("Email is required");
       hasError = true;
+    } else {
+      setEmailError("");
     }
     if (password === "") {
       setPasswordError("Password is required");
       hasError = true;
+    } else {
+      setPasswordError("");
     }
     if (confirmPass !== password) {
       setConfirmError("Passwords do not match");
       hasError = true;
+    } else {
+      setConfirmError("");
     }
 
     if (!hasError) {
-      console.log({
-        email: data.get('email'),
-        password: data.get('password'),
-        confirm_password: data.get('confirm-password')
-      });
+      try {
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, password: password })
+        };
+        const response = await fetch('http://localhost:5555/register', requestOptions);
+        const data = await response.json();
+        if (response.status === 200) {
+          setUID(data)
+        } else {
+          setEmailError(data)
+        }
+      } catch (error) {
+        console.log(error);
+        setEmailError("Unexpected error occured, check console for info");
+      }
     }
   };
+
 
   return (
     <div>
