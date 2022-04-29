@@ -9,7 +9,7 @@
   "scripts": {
     "start": "concurrently \"cd backend && node index.js\" \"cd frontend/project-atlas && npm start\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "npm install && cd frontend/project-atlas && npm install && cd ../../backend && npm install && cd ./controllers && pip3 install -r requirements.txt"
+    "install": "cd frontend/project-atlas && npm install && cd ../../backend && npm install && cd ./controllers && pip3 install -r requirements.txt"
   },
   "repository": {
     "type": "git",
