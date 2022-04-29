@@ -42,8 +42,6 @@ router.post('/register', (req, res) => {
         console.error(e)
     }
 });
-// should take username and password in json
-const authTokens = {};
 
 router.post('/login', (req, res) => {
     const {email, password}  = req.body;
@@ -65,8 +63,18 @@ router.patch('/update/user/:id', (req, res) => {
     const {email, password}  = req.body;
     const nanoid = req.params.id;
 
-    const stmt = db.prepare(`UPDATE userinfo SET email = COALESCE('${email}',email), password = COALESCE('${password}',password) WHERE nanoid = '${nanoid}'`).run();
-    res.status(200).json(stmt);
+    if(email != undefined) {
+        const stmt = db.prepare(`UPDATE userinfo
+                            SET email = '${email}'
+                            WHERE nanoid = '${nanoid}'`).run();
+    }
+    if(password != undefined) {
+        const stmt = db.prepare(`UPDATE userinfo
+                                SET password = '${getHashedPassword(password)}'
+                                WHERE nanoid = '${nanoid}'`).run();
+    }
+
+    res.status(200).json(nanoid);
 })
 
 router.delete('/delete/user/:id', (req, res) => {
@@ -78,7 +86,7 @@ router.delete('/delete/user/:id', (req, res) => {
 router.get('/info/user/:id', (req, res) => {
     const nanoid = req.params.id;
     const stmt = db.prepare(`SELECT email FROM userinfo WHERE nanoid = '${nanoid}'`).all();
-    res.status(200).json(stmt[0]);
+    res.status(200).json(stmt);
 })
 
 router.get('/history/user/:id', (req, res) => {
