@@ -98,4 +98,8 @@ Front-end packages used:
 2. Material UI
 3. React Simple Maps
 
-Run using node index.js
+### How to Run:
+1. First ensure you have python3 and pip3 installed along with the latest versions of node and npm
+2. Run "npm install" to install all packages and dependencies for the entire app
+3. Run "npm test" to ensure the backend can start
+4. Run "npm start" to start the app (both the backend and frontend)
