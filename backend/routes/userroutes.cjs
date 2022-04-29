@@ -64,8 +64,8 @@ router.get('/cases/:id', (req, res) => {
     const time = `${req.params.id}`; 
 
     const cases = db.prepare(`SELECT data FROM cases WHERE time='${time}'`).all();
-
-    res.status(200).json(cases);
+    
+    res.status(200).json(cases[0]);
 })
 
 router.get('/deaths/:id', (req, res) => {
@@ -73,7 +73,7 @@ router.get('/deaths/:id', (req, res) => {
 
     const cases = db.prepare(`SELECT data FROM deaths WHERE time='${time}'`).all();
 
-    res.status(200).json(cases);
+    res.status(200).json(cases[0]);
 })
 
 router.get('/vaccinations/:id', (req, res) => {
@@ -81,7 +81,7 @@ router.get('/vaccinations/:id', (req, res) => {
 
     const cases = db.prepare(`SELECT data FROM vaccinations WHERE time='${time}'`).all();
 
-    res.status(200).json(cases);
+    res.status(200).json(cases[0]);
 })
 
 module.exports = router; 
