@@ -56,7 +56,7 @@ export const SignUp = ({ setUID, toggleSignIn }) => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email, password: password })
         };
-        const response = await fetch('http://localhost:5555/register', requestOptions);
+        const response = await fetch('http://localhost:5555/app/register', requestOptions);
         const data = await response.json();
         if (response.status === 200) {
           setUID(data)
