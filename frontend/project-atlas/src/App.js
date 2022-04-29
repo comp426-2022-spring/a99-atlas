@@ -7,23 +7,27 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Auth } from './components/Authentication/Auth';
+import { Dropdowns } from './components/Dropdowns';
 
 function App() {
   const [content, setContent] = useState("");
   const [uid, setUID] = useState("");
+  const [metric, setMetric] = useState("cases");
+  const [time, setTime] = useState("allTime");
 
   return (
     <div>
       <Auth uid={uid} setUID={setUID}/>
-      <AppBar position="static" className='appbar'>
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar sx={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between" }}>
+          <Typography variant="h6" component="div" >
             Project Atlas
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Dropdowns time={time} setTime={setTime} metric={metric} setMetric={setMetric}/>
+          <Button color="inherit">Account</Button>
         </Toolbar>
       </AppBar>
-      <div className='map'><MapChart setTooltipContent={setContent} /> </div>
+      <div className='map'><MapChart setTooltipContent={setContent} time={time} metric={metric} /> </div>
       <ReactTooltip>{content}</ReactTooltip>
     </div>
   );

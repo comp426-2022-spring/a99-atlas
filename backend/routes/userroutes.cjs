@@ -64,7 +64,9 @@ router.get('/cases/:id', (req, res) => {
     const time = `${req.params.id}`; 
 
     const cases = db.prepare(`SELECT data FROM cases WHERE time='${time}'`).all();
-    
+    if (cases.length > 0) {
+        cases[0]['data'] = JSON.parse(cases[0]['data'])
+    }
     res.status(200).json(cases[0]);
 })
 
@@ -72,7 +74,9 @@ router.get('/deaths/:id', (req, res) => {
     const time = `${req.params.id}`; 
 
     const cases = db.prepare(`SELECT data FROM deaths WHERE time='${time}'`).all();
-
+    if (cases.length > 0) {
+        cases[0]['data'] = JSON.parse(cases[0]['data'])
+    }
     res.status(200).json(cases[0]);
 })
 
@@ -80,7 +84,9 @@ router.get('/vaccinations/:id', (req, res) => {
     const time = `${req.params.id}`; 
 
     const cases = db.prepare(`SELECT data FROM vaccinations WHERE time='${time}'`).all();
-
+    if (cases.length > 0) {
+        cases[0]['data'] = JSON.parse(cases[0]['data'])
+    }
     res.status(200).json(cases[0]);
 })
 
