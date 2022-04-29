@@ -24,53 +24,42 @@ def getCode(name: str) -> str:
         j += 1
     return code
 
-# function to get Death Per Capita
-#def getDPC(name: str, deaths: int) -> float:
-#    j: int = 0
-#    dpc: float = 0
-#    population: int = 1
-#    while j < len(populations):
-#        if populations[j]['country'] == name:
-#            population = populations[j]['population']
-#        j += 1
-#    dpc = deaths / population
-#    return dpc
-
-# Function that updates min and max values
-def checkValue (dpm: float):
+def checkValue (cpm: float):
     global max
     global min
-    if dpm > max:
-        max = dpm
-    if dpm < min:
-        min = dpm
+    if cpm > max:
+        max = cpm
+    if cpm < min:
+        min = cpm
 
 # function to parse through mega JSON with all death data
 def parse(end_day: str, start_day: str) -> Dict:
     dataList = []
     returnDict: Dict = {}
     i: int = 0
-    start_deaths: int = 0
-    end_deaths: int = 0
+    start_cases: int = 0
+    end_cases: int = 0
     fDate: str =  start_day
     while i <= len(data['location']) - 1:
         dataDict: Dict = {} 
         codeDict: Dict = {}
         if str(data['date'][i]) == start_day: 
-            start_deaths = data['total_deaths_per_million'][i] # get deaths at specified beginning date
+            start_cases = data['total_cases_per_million'][i] # get cases at specified beginning date
         if str(data['date'][i]) == end_day:
-            end_deaths = data['total_deaths_per_million'][i] # get deaths at specified end date
-            name = data['location'][i] # get name, country code, deaths in specified time, and death per capita
+            end_cases = data['total_cases_per_million'][i] # get cases at specified end date
+            name = data['location'][i] # get name, country code, cases in specified time
             fDate = getFDate(i - 1, end_day)
             code = getCode(name)
             if code != "":
-                deaths = end_deaths - start_deaths 
-                if deaths < 0:
-                    deaths = end_deaths # if deaths less than 0, we don't have enough data. Use total deaths instead
-                #dpc = getDPC(name, deaths)
-                checkValue(deaths) 
+                try:
+                    cases = end_cases - start_cases 
+                    if cases < 0:
+                        cases = end_cases # if cases less than 0, we don't have enough data. Use total cases instead
+                except:
+                    cases = 0
+                checkValue(cases) 
                 dataDict['name'] = name
-                dataDict['num'] = deaths
+                dataDict['num'] = cases
                 dataDict['reportDate1'] = fDate
                 codeDict[code] = dataDict
                 dataList.append(codeDict)
@@ -118,17 +107,13 @@ if __name__ == "__main__":
     max: float = 0.0
     min: float = 100.0 # set up max and min variables
     
-    url = requests.get("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/internal/megafile--deaths.json")
+    url = requests.get("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/internal/megafile--cases-tests.json")
     text = url.text 
-    data = json.loads(text) # read in death data JSON
-
-    #url2 = requests.get("https://raw.githubusercontent.com/samayo/country-json/master/src/country-by-population.json")
-    #text2 = url2.text
-    #populations = json.loads(text2) # read in population data JSON
+    data = json.loads(text) # read in cases data JSON
 
     url3 = requests.get("https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.json")
     text3 = url3.text
     codes = json.loads(text3) # read in country code data JSON
 
     finaljson = main()
-    dbimport(finaljson, "deaths")
+    dbimport(finaljson, "cases")

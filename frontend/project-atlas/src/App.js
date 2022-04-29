@@ -1,23 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import MapChart from './components/MapChart';
+import ReactTooltip from "react-tooltip";
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import { Auth } from './components/Authentication/Auth';
 
 function App() {
+  const [content, setContent] = useState("");
+  const [uid, setUID] = useState("");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Auth uid={uid} setUID={setUID}/>
+      <AppBar position="static" className='appbar'>
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Project Atlas
+          </Typography>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
+      <div className='map'><MapChart setTooltipContent={setContent} /> </div>
+      <ReactTooltip>{content}</ReactTooltip>
     </div>
   );
 }

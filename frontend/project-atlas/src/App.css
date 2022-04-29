@@ -28,11 +28,28 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.appbar {
+  align-items: 'center';
+}
+
+.map {
+  padding: 10px;
+}
+
+.login-modal {
+  position: 'absolute';
+  top: '50%';
+  left: '50%';
+  transform: 'translate(-50%, -50%)';
+  width: 400;
+  background-color: 'background.paper';
+  border: '2px solid #000';
+  box-shadow: 24;
+}
+
+.app-title {
+  text-align: center;
+  font-size: 32px;
+  padding-top: 15px;
+  padding-bottom: 5px;
 }
