@@ -77,7 +77,7 @@ const MapChart = ({ setTooltipContent, time, metric }) => {
                       stroke="#ff5233"
                       strokeWidth={0.03}
                       onMouseEnter={() => {
-                        const { NAME, POP_EST } = geo.properties;
+                        const { NAME } = geo.properties;
                         let content = `${NAME} — Unknown`;
                         if (d) {
                           content = `${NAME} — ${rounded(d[iso]["num"])}`;
