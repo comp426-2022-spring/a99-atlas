@@ -20,6 +20,8 @@ def getCode(name: str) -> str:
         name = "Bonaire, Sint Eustatius and Saba"
     if name == "British Virgin Islands":
         name = "Virgin Islands (British)"
+    if name == "Bolivia":
+        name = "Bolivia (Plurinational State of)"
     if name == "Cape Verde":
         name = "Cabo Verde"
     if name == "Curacao":
@@ -28,6 +30,8 @@ def getCode(name: str) -> str:
         name = "Congo, Democratic Republic of the"
     if name == "Faeroe Islands":
         name = "Faroe Islands"
+    if name == "Iran":
+        name = "Iran (Islamic Republic of)"
     if name == "Laos":
         name = "Lao People's Democratic Republic"
     if name == "Moldova":
