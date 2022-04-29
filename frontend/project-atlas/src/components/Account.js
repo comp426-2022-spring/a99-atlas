@@ -60,7 +60,7 @@ export const Account = ({ openAccount, setOpenAccount, uid, setUID }) => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email, password: password })
         };
-        const response = await fetch(`http://localhost:5555/update/user/${uid}`, requestOptions);
+        const response = await fetch(`http://localhost:5555/app/update/user/${uid}`, requestOptions);
         const data = await response.json();
         if (response.status === 200) {
           console.log(data)
@@ -82,7 +82,7 @@ export const Account = ({ openAccount, setOpenAccount, uid, setUID }) => {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
       };
-      const response = await fetch(`http://localhost:5555/delete/user/${uid}`, requestOptions);
+      const response = await fetch(`http://localhost:5555/app/delete/user/${uid}`, requestOptions);
       const data = await response.json();
       if (response.status === 200) {
         console.log(data);
@@ -105,7 +105,7 @@ export const Account = ({ openAccount, setOpenAccount, uid, setUID }) => {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         };
-        const response = await fetch(`http://localhost:5555/info/user/${uid}`, requestOptions);
+        const response = await fetch(`http://localhost:5555/app/info/user/${uid}`, requestOptions);
         let resp = await response.json();
         if (response.status === 200) {
           setCurrentEmail(resp['email']);

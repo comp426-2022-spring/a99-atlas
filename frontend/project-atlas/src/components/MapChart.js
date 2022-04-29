@@ -42,7 +42,7 @@ const MapChart = ({ setTooltipContent, time, metric }) => {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         };
-        const response = await fetch(`http://localhost:5555/${metric}/${time}`, requestOptions);
+        const response = await fetch(`http://localhost:5555/app/${metric}/${time}`, requestOptions);
         let resp = await response.json();
         if (response.status === 200 && resp.data.data) {
           setMin(resp.data.min);

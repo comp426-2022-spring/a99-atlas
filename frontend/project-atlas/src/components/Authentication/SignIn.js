@@ -48,7 +48,7 @@ export const SignIn = ({ setUID, toggleSignIn }) => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email, password: password })
         };
-        const response = await fetch('http://localhost:5555/login', requestOptions);
+        const response = await fetch('http://localhost:5555/app/login', requestOptions);
         const data = await response.json();
         if (response.status === 200) {
           setUID(data[0]['nanoid'])
