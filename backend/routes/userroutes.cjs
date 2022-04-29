@@ -23,14 +23,14 @@ router.post('/register', (req, res) => {
         const stmt = db.prepare(`SELECT email FROM userinfo WHERE email = ('${email}')`).all();
 
         if (stmt.length != 0) {
-            res.status(400).send("Email already in use.");
+            res.status(400).json("Email already in use.");
         } else {
             const hashedPw = getHashedPassword(password);
 
             var nanoid = crypto.randomBytes(5).toString('hex');
             const adduser = db.prepare(`INSERT INTO userinfo (email, nanoid, password) VALUES ('${email}','${nanoid}','${hashedPw}')`).run();
 
-            res.status(200).send(nanoid);
+            res.status(200).json(nanoid);
         }
     } catch (e) {
         console.error(e)
@@ -48,9 +48,9 @@ router.post('/login', (req, res) => {
     if (user.length > 0) {
         var nanoid = db.prepare(`SELECT nanoid FROM userinfo WHERE (email = '${email}' AND password = '${hashedPw}')`).all();
         // console.log(nanoid);
-        res.status(200).send(nanoid);
+        res.status(200).json(nanoid);
     } else {
-        res.status(400).send("Invalid email or password");
+        res.status(400).json("Invalid email or password");
     }
 });
 
@@ -64,8 +64,8 @@ router.get('/cases/:id', (req, res) => {
     const time = `${req.params.id}`; 
 
     const cases = db.prepare(`SELECT data FROM cases WHERE time='${time}'`).all();
-
-    res.status(200).json(cases);
+    
+    res.status(200).json(cases[0]);
 })
 
 router.get('/deaths/:id', (req, res) => {
@@ -73,7 +73,7 @@ router.get('/deaths/:id', (req, res) => {
 
     const cases = db.prepare(`SELECT data FROM deaths WHERE time='${time}'`).all();
 
-    res.status(200).json(cases);
+    res.status(200).json(cases[0]);
 })
 
 router.get('/vaccinations/:id', (req, res) => {
@@ -81,7 +81,7 @@ router.get('/vaccinations/:id', (req, res) => {
 
     const cases = db.prepare(`SELECT data FROM vaccinations WHERE time='${time}'`).all();
 
-    res.status(200).json(cases);
+    res.status(200).json(cases[0]);
 })
 
 module.exports = router; 
