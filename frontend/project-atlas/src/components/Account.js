@@ -23,7 +23,7 @@ export const Account = ({ openAccount, setOpenAccount, uid, setUID }) => {
   const [confirmError, setConfirmError] = useState("");
   const [currentEmail, setCurrentEmail] = useState("");
 
-  const handleSubmit = async (event) => {
+  const handleUpdate = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -53,18 +53,20 @@ export const Account = ({ openAccount, setOpenAccount, uid, setUID }) => {
 
     if (!hasError) {
       try {
+        console.log(email);
+        console.log(password);
         const requestOptions = {
-          method: 'POST',
+          method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email, password: password })
         };
-        const response = await fetch('http://localhost:5555/login', requestOptions);
+        const response = await fetch(`http://localhost:5555/update/user/${uid}`, requestOptions);
         const data = await response.json();
         if (response.status === 200) {
-          //setUID(data)
+          console.log(data)
+          setOpenAccount(false);
         } else {
           setEmailError(data)
-          setPasswordError(data)
         }
       } catch (error) {
         console.log(error);
@@ -117,7 +119,7 @@ export const Account = ({ openAccount, setOpenAccount, uid, setUID }) => {
     if (uid !== "") {
       fetchData(uid);
     }
-  }, [uid]);
+  }, [openAccount, uid]);
   
 
   return (
@@ -139,7 +141,7 @@ export const Account = ({ openAccount, setOpenAccount, uid, setUID }) => {
           <Typography component="h1" variant="h5">
             Account Info
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleUpdate} noValidate sx={{ mt: 1 }}>
           <TextField
               margin="normal"
               required
