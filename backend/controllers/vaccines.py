@@ -28,6 +28,8 @@ def getCode(name: str) -> str:
         name = "Congo, Democratic Republic of the"
     if name == "Faeroe Islands":
         name = "Faroe Islands"
+    if name == "Iran":
+        name = "Iran (Islamic Republic of)"
     if name == "Laos":
         name = "Lao People's Democratic Republic"
     if name == "Moldova":
@@ -54,6 +56,10 @@ def getCode(name: str) -> str:
         name = "Venezuela (Bolivarian Republic of)"
     if name == "Vietnam":
         name = "Viet Nam"
+    if name == "Iran":
+        name = "Iran (Islamic Republic of)"
+    if name == "Bolivia":
+        name = "Bolivia (Plurinational State of)"
     j: int = 0
     code: str = ""
     while j < len(codes):
