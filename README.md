@@ -85,12 +85,17 @@ Back-end packages used:
 2. minimist
 3. cookie-parse
 4. body-parser
-5. crypto
-6. better-sqlite3
-7. sqlite3
-8. python3 (requirement)
+5. morgan
+6. crypto
+7. better-sqlite3
+8. sqlite3
+9. python3 (requirement)
+10. cors
+11. nanoid
 
 Front-end packages used:
-1. ????
+1. React
+2. Material UI
+3. React Simple Maps
 
 Run using node index.js
