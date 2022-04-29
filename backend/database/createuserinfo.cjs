@@ -13,6 +13,7 @@ if (row === undefined) {
     const sqlInit = `
         CREATE TABLE userinfo (id INTEGER PRIMARY KEY,
             email TEXT,
+            nanoid TEXT,
             password TEXT);
     `;
     db.exec(sqlInit);
