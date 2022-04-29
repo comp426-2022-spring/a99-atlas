@@ -47,7 +47,7 @@ var userroutes = require('./routes/userroutes.cjs');
 
 app.use(express.json());
 
-app.use('',userroutes);
+app.use('/app',userroutes);
  
 process.on('SIGTERM', () => {
     server.close(( )=> {
