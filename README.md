@@ -77,7 +77,7 @@ Good skill and be creative!
 11. Research Team: Kaan, Liam, Nathan
 
 ## Project Description:
-This project is a functional website that displays historical COVID-19 per-capita statistics on an interactive world-map. The shading of the world-map is dependent on the data values' associated with each country. For example, if a country has high vaccination rates, it will appear darker on the world map. Statistics displayed by our program include cases, total deaths, and vaccination data. We pulled all our data from regularly updated json files listed under this public GitHub repository: https://github.com/owid/covid-19-data/tree/master/public/data
+This project is a functional website that displays historical COVID-19 per-capita statistics on an interactive world-map. The shading of the world-map is dependent on the data values' associated with each country. For example, if a country has high vaccination rates, it will appear darker on the world map. Statistics displayed by our program include cases, deaths, and vaccination data. We pulled all our data from regularly updated json files listed under this public GitHub repository: https://github.com/owid/covid-19-data/tree/master/public/data. An example visualization by Our World In Data, the collectors of this data, can be found here: https://ourworldindata.org/covid-cases.
 
 ### Installation Requirements:
 Back-end packages used:
