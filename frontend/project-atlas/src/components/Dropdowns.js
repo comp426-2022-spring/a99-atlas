@@ -4,7 +4,7 @@ import { Container, FormControl, Typography, MenuItem, Select } from '@mui/mater
 export const Dropdowns = ({ time, setTime, metric, setMetric }) => {
   return (
     <Container sx={{ display: 'flex', flexDirection: 'row', justifyContent: "center", alignItems: "center" }}>
-      <Typography variant="subtitle1" component="div" >Metric: </Typography>
+      <Typography variant="subtitle1" component="div" >Metric (per Million): </Typography>
       <FormControl variant="standard" size="small" sx={{ ml: 1.5, mr: 4, minWidth: 150 }}>
         <Select
           labelId="demo-simple-select-filled-label"

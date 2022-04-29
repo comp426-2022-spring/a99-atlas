@@ -20,6 +20,7 @@ export const SignIn = ({ setUID, toggleSignIn }) => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
+  // Fire when submit button is pressed
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -27,6 +28,7 @@ export const SignIn = ({ setUID, toggleSignIn }) => {
     const email = data.get('email');
     const password = data.get('password');
 
+    // Check for user input error
     let hasError = false;
     if (email === "") {
       setEmailError("Email is required");
@@ -42,7 +44,7 @@ export const SignIn = ({ setUID, toggleSignIn }) => {
     }
 
     if (!hasError) {
-      try {
+      try { // Attempt to login user
         const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -50,7 +52,7 @@ export const SignIn = ({ setUID, toggleSignIn }) => {
         };
         const response = await fetch('http://localhost:5555/app/login', requestOptions);
         const data = await response.json();
-        if (response.status === 200) {
+        if (response.status === 200) { // On success save the user id provided by backend
           setUID(data[0]['nanoid'])
         } else {
           setEmailError(data)

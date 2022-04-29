@@ -23,6 +23,7 @@ export const Account = ({ openAccount, setOpenAccount, uid, setUID }) => {
   const [confirmError, setConfirmError] = useState("");
   const [currentEmail, setCurrentEmail] = useState("");
 
+  // Fire on submit to update user info
   const handleUpdate = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -31,6 +32,7 @@ export const Account = ({ openAccount, setOpenAccount, uid, setUID }) => {
     const password = data.get('password');
     const confirmPass = data.get('confirm-password');
 
+    // Check if error with user input
     let hasError = false;
     if (email === "") {
       setEmailError("Email is required");
@@ -52,7 +54,7 @@ export const Account = ({ openAccount, setOpenAccount, uid, setUID }) => {
     }
 
     if (!hasError) {
-      try {
+      try { // Attempt to update user info
         console.log(email);
         console.log(password);
         const requestOptions = {
@@ -75,6 +77,7 @@ export const Account = ({ openAccount, setOpenAccount, uid, setUID }) => {
     }
   };
 
+  // Handle user deletion if delete button pressed
   const handleDelete = async (event) => {
     event.preventDefault();
     try {
@@ -98,7 +101,7 @@ export const Account = ({ openAccount, setOpenAccount, uid, setUID }) => {
   }
 
 
-  useEffect(() => {
+  useEffect(() => { // Get user data each time userid changes or accounts page opened
     async function fetchData(uid) {
       try {
         const requestOptions = {
@@ -108,7 +111,7 @@ export const Account = ({ openAccount, setOpenAccount, uid, setUID }) => {
         const response = await fetch(`http://localhost:5555/app/info/user/${uid}`, requestOptions);
         let resp = await response.json();
         if (response.status === 200) {
-          setCurrentEmail(resp['email']);
+          setCurrentEmail(resp[0]['email']);
         } else {
           throw Error("Unknown error occurred when getting map data from server");
         }

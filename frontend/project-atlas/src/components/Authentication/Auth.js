@@ -6,7 +6,7 @@ import Modal from '@mui/material/Modal';
 export const Auth = ({ uid, setUID }) => {
   const [showSignIn, setShowSignIn] = useState(true);
 
-  const toggleSignIn = () => setShowSignIn(value => !value);
+  const toggleSignIn = () => setShowSignIn(value => !value); // toggle fuction for sign in and sign up 
 
   return (
     <Modal

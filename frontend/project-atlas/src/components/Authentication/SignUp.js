@@ -21,6 +21,7 @@ export const SignUp = ({ setUID, toggleSignIn }) => {
   const [passwordError, setPasswordError] = useState("");
   const [confirmError, setConfirmError] = useState("");
 
+  // Fire on submit
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -29,6 +30,7 @@ export const SignUp = ({ setUID, toggleSignIn }) => {
     const password = data.get('password');
     const confirmPass = data.get('confirm-password');
 
+    // Check for user input errors
     let hasError = false;
     if (email === "") {
       setEmailError("Email is required");
@@ -50,7 +52,7 @@ export const SignUp = ({ setUID, toggleSignIn }) => {
     }
 
     if (!hasError) {
-      try {
+      try { // Attempt to create a new user
         const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -58,7 +60,8 @@ export const SignUp = ({ setUID, toggleSignIn }) => {
         };
         const response = await fetch('http://localhost:5555/app/register', requestOptions);
         const data = await response.json();
-        if (response.status === 200) {
+        if (response.status === 200) { // On success save the user id provided by backend
+          console.log(data);
           setUID(data)
         } else {
           setEmailError(data)

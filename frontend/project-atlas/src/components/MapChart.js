@@ -34,9 +34,11 @@ const MapChart = ({ setTooltipContent, time, metric }) => {
 
   useEffect(() => {
     async function fetchData(metric, time) {
+      // Dummy data if fetch doesn't work
       csv(`/vulnerability.csv`).then((data) => {
         setData(data);
       });
+      // Retrieve data from backend
       try {
         const requestOptions = {
           method: 'GET',
