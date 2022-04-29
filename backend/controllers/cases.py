@@ -16,6 +16,44 @@ def getFDate(i: int, end_day: str) -> str:
 
 # function to get country code
 def getCode(name: str) -> str:
+    if name == "Bonaire Sint Eustatius and Saba":
+        name = "Bonaire, Sint Eustatius and Saba"
+    if name == "British Virgin Islands":
+        name = "Virgin Islands (British)"
+    if name == "Cape Verde":
+        name = "Cabo Verde"
+    if name == "Curacao":
+        name = "Curaçao"
+    if name == "Democratic Republic of Congo":
+        name = "Congo, Democratic Republic of the"
+    if name == "Faeroe Islands":
+        name = "Faroe Islands"
+    if name == "Laos":
+        name = "Lao People's Democratic Republic"
+    if name == "Moldova":
+        name = "Moldova, Republic of"
+    if name == "Palestine":
+        name = "Palestine, State of"
+    if name == "Russia":
+        name = "Russian Federation"
+    if name == "South Korea":
+        name = "Korea, Republic of"
+    if name == "Syria":
+        name = "Syrian Arab Republic"
+    if name == "Taiwan":
+        name = "Taiwan, Province of China"
+    if name == "Tanzania":
+        name = "Tanzania, United Republic of"
+    if name == "Timor":
+        name = "Timor-Leste"
+    if name == "United Kingdom":
+        name = "United Kingdom of Great Britain and Northern Ireland"
+    if name == "United States":
+        name = "United States of America"
+    if name == "Venezuela":
+        name = "Venezuela (Bolivarian Republic of)"
+    if name == "Vietnam":
+        name = "Viet Nam"
     j: int = 0
     code: str = ""
     while j < len(codes):
