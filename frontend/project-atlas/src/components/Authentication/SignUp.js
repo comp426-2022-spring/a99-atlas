@@ -59,7 +59,7 @@ export const SignUp = ({ setUID, toggleSignIn }) => {
         const response = await fetch('http://localhost:5555/register', requestOptions);
         const data = await response.json();
         if (response.status === 200) {
-          setUID(data)
+          setUID(data[0]['nanoid'])
         } else {
           setEmailError(data)
         }
