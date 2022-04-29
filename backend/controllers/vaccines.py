@@ -89,28 +89,28 @@ def main() -> Dict:
     global min
     global max
     
-    end_day = date.today() - relativedelta(days=1)
+    end_day = date.today() - relativedelta(days=2)
     start_day = "Beginning"
     finalDict['allTime'] = parse(str(end_day), str(start_day))
 
     max = 0.0 # reset min and max after every new parsing data call
     min = 100.0
 
-    end_day = date.today() - relativedelta(days=1)
+    end_day = date.today() - relativedelta(days=2)
     start_day = end_day - relativedelta(years=1)
     finalDict['lastYear'] = parse(str(end_day), str(start_day))
 
     max = 0.0
     min = 100.0
 
-    end_day = date.today() - relativedelta(days=1)
+    end_day = date.today() - relativedelta(days=2)
     start_day = end_day - relativedelta(months=6)
     finalDict['last6Months'] = parse(str(end_day), str(start_day))
 
     max = 0.0
     min = 100.0
 
-    end_day = date.today() - relativedelta(days=1)
+    end_day = date.today() - relativedelta(days=2)
     start_day = end_day - relativedelta(days=30)
     finalDict['last30Days'] = parse(str(end_day), str(start_day))
 
