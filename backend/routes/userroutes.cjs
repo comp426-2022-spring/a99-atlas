@@ -15,6 +15,12 @@ const { appendFile } = require("fs");
 const { spawn } = require('child_process');
 const { json } = require("body-parser");
 
+const fs = require('fs')
+const morgan = require('morgan')
+
+const writestream = fs.createWriteStream('./access.log', {flags: 'a'})
+router.use(morgan('combined',{stream:writestream}))
+
 // should take un, email, 2 passwords in json format
 router.post('/register', (req, res) => {
     const {email, password} = req.body;
@@ -47,12 +53,40 @@ router.post('/login', (req, res) => {
 
     if (user.length > 0) {
         var nanoid = db.prepare(`SELECT nanoid FROM userinfo WHERE (email = '${email}' AND password = '${hashedPw}')`).all();
-        // console.log(nanoid);
-        res.status(200).json(nanoid);
+        var currentdate = new Date();
+        const loglogin = db.prepare(`INSERT INTO loginhistory (email, nanoid, dt) VALUES ('${email}','${nanoid[0]['nanoid']}','${currentdate}')`).run();
+        res.status(200).send(nanoid);
     } else {
         res.status(400).json("Invalid email or password");
     }
 });
+
+router.patch('/update/user/:id', (req, res) => {
+    const {email, password}  = req.body;
+    const nanoid = req.params.id;
+
+    const stmt = db.prepare(`UPDATE userinfo SET email = COALESCE('${email}',email), password = COALESCE('${password}',password) WHERE nanoid = '${nanoid}'`).run();
+    res.status(200).json(stmt);
+})
+
+router.delete('/delete/user/:id', (req, res) => {
+    const nanoid = req.params.id;
+    const stmt = db.prepare(`DELETE FROM userinfo WHERE nanoid = '${nanoid}'`).run();
+    res.status(200).json(stmt);
+})
+
+router.get('/info/user/:id', (req, res) => {
+    const nanoid = req.params.id;
+    const stmt = db.prepare(`SELECT email FROM userinfo WHERE nanoid = '${nanoid}'`).all();
+    res.status(200).json(stmt[0]);
+})
+
+router.get('/history/user/:id', (req, res) => {
+    const nanoid = req.params.id;
+    const stmt = db.prepare(`SELECT dt FROM loginhistory WHERE nanoid = '${nanoid}'`).all();
+    console.log(stmt);
+    res.status(200).json(stmt);
+})
 
 const getHashedPassword = (password) => {
     const sha256 = crypto.createHash('sha256');
@@ -88,6 +122,44 @@ router.get('/vaccinations/:id', (req, res) => {
         cases[0]['data'] = JSON.parse(cases[0]['data'])
     }
     res.status(200).json(cases[0]);
+})
+
+// router.use( (req, res, next) => {
+//     let logdata = {
+//         remoteaddr: req.ip,
+//         remoteuser: req.user,
+//         time: Date.now(),
+//         method: req.method,
+//         url: req.url,
+//         protocol: req.protocol,
+//         httpversion: req.httpVersion,
+//         secure: req.secure,
+//         status: res.statusCode,
+//         referer: req.headers['referer'],
+//         useragent: req.headers['user-agent']
+//     };
+//     const stmt = db.prepare(`
+//         INSERT INTO accesslog (remoteaddr,
+//         remoteuser,
+//         time,
+//         method,
+//         url,
+//         protocol,
+//         httpversion,
+//         secure,
+//         status,
+//         referer,
+//         useragent) values (?,?,?,?,?,?,?,?,?,?,?);
+//     `);
+//     const info = stmt.run(logdata.remoteaddr, logdata.remoteuser, logdata.time,logdata.method,
+//         logdata.url,logdata.protocol,logdata.httpversion,logdata.secure,logdata.status,logdata.referer,logdata.useragent);
+//     res.status(200).json(info);
+//     next();
+// })
+
+router.use(function(req, res) {
+    res.json({"message":"Endpoint not found. (404"});
+    res.status(404);
 })
 
 module.exports = router; 
