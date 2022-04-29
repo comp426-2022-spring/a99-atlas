@@ -20,7 +20,6 @@ export const SignIn = ({ setUID, toggleSignIn }) => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -49,10 +48,10 @@ export const SignIn = ({ setUID, toggleSignIn }) => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email, password: password })
         };
-        const response = await fetch('http://localhost:5555/login', requestOptions);
+        const response = await fetch('http://localhost:5555/app/login', requestOptions);
         const data = await response.json();
         if (response.status === 200) {
-          setUID(data)
+          setUID(data[0]['nanoid'])
         } else {
           setEmailError(data)
           setPasswordError(data)

@@ -42,10 +42,12 @@ const MapChart = ({ setTooltipContent, time, metric }) => {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         };
-        const response = await fetch(`http://localhost:5555/${metric}/${time}`, requestOptions);
+        const response = await fetch(`http://localhost:5555/app/${metric}/${time}`, requestOptions);
         let resp = await response.json();
-        if (response.status === 200) {
-          
+        if (response.status === 200 && resp.data.data) {
+          setMin(resp.data.min);
+          setMax(resp.data.max);
+          setData(resp.data.data);
         } else {
           throw Error("Unknown error occurred when getting map data from server");
         }
@@ -66,7 +68,8 @@ const MapChart = ({ setTooltipContent, time, metric }) => {
             <Geographies geography={geoUrl}>
               {({ geographies }) =>
                 geographies.map((geo) => {
-                  const d = data.find((s) => s.ISO3 === geo.properties.ISO_A3);
+                  const iso = geo.properties.ISO_A3;
+                  const d = data.find((s) => s.hasOwnProperty(iso));
                   return (
                     <Geography
                       key={geo.rsmKey}
@@ -74,8 +77,11 @@ const MapChart = ({ setTooltipContent, time, metric }) => {
                       stroke="#ff5233"
                       strokeWidth={0.03}
                       onMouseEnter={() => {
-                        const { NAME, POP_EST } = geo.properties;
-                        let content = `${NAME} — ${rounded(POP_EST)}`;
+                        const { NAME } = geo.properties;
+                        let content = `${NAME} — Unknown`;
+                        if (d) {
+                          content = `${NAME} — ${rounded(d[iso]["num"])}`;
+                        }
                         setTooltipContent(content);
                       }}
                       onMouseLeave={() => {
@@ -83,7 +89,7 @@ const MapChart = ({ setTooltipContent, time, metric }) => {
                       }}
                       style={{
                         default: {
-                          fill: d ? colorScale(d["2017"]) : "#F5F4F6",
+                          fill: d ? colorScale(d[iso]["num"]) : "#F5F4F6",
                           outline: "none"
                         },
                         hover: {
