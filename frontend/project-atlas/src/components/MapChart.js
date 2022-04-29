@@ -23,18 +23,38 @@ const rounded = (num) => {
   }
 };
 
-const MapChart = ({ setTooltipContent }) => {
+const MapChart = ({ setTooltipContent, time, metric }) => {
   const [data, setData] = useState([]);
+  const [min, setMin] = useState(0.29);
+  const [max, setMax] = useState(0.68);
 
   const colorScale = scaleLinear()
-  .domain([0.29, 0.68])
+  .domain([min, max])
   .range(["#ffedea", "#ff5233"]);
 
   useEffect(() => {
-    csv(`/vulnerability.csv`).then((data) => {
-      setData(data);
-    });
-  }, []);
+    async function fetchData(metric, time) {
+      csv(`/vulnerability.csv`).then((data) => {
+        setData(data);
+      });
+      try {
+        const requestOptions = {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        };
+        const response = await fetch(`http://localhost:5555/${metric}/${time}`, requestOptions);
+        let resp = await response.json();
+        if (response.status === 200) {
+          
+        } else {
+          throw Error("Unknown error occurred when getting map data from server");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData(metric, time);
+  }, [time, metric]);
   
   return (
     <>

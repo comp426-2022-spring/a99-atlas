@@ -27,7 +27,7 @@ function App() {
           <Button color="inherit">Account</Button>
         </Toolbar>
       </AppBar>
-      <div className='map'><MapChart setTooltipContent={setContent} /> </div>
+      <div className='map'><MapChart setTooltipContent={setContent} time={time} metric={metric} /> </div>
       <ReactTooltip>{content}</ReactTooltip>
     </div>
   );
