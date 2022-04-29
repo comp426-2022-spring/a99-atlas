@@ -1,0 +1,27 @@
+{
+  "name": "a99-atlas",
+  "version": "1.0.0",
+  "description": "Web app displaying an interactive map of covid statistics around the world",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "concurrently \"cd backend && node index.js\" \"cd frontend/project-atlas && npm start\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "cd frontend/project-atlas && npm install && cd ../../backend && npm install && cd ./controllers && pip3 install -r requirements.txt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/comp426-2022-spring/a99-atlas.git"
+  },
+  "author": "Team Atlas",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/comp426-2022-spring/a99-atlas/issues"
+  },
+  "homepage": "https://github.com/comp426-2022-spring/a99-atlas#readme",
+  "dependencies": {
+    "concurrently": "^7.1.0"
+  }
+}
