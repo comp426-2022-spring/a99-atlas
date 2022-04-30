@@ -53,7 +53,7 @@ router.post('/login', (req, res) => {
         var nanoid = db.prepare(`SELECT nanoid FROM userinfo WHERE (email = '${email}' AND password = '${hashedPw}')`).all();
         var currentdate = new Date();
         const loglogin = db.prepare(`INSERT INTO loginhistory (email, nanoid, dt) VALUES ('${email}','${nanoid[0]['nanoid']}','${currentdate}')`).run();
-        res.status(200).send(nanoid);
+        res.status(200).json(nanoid);
     } else {
         res.status(400).json("Invalid email or password");
     }
@@ -166,7 +166,7 @@ router.get('/vaccinations/:id', (req, res) => {
 // })
 
 router.use(function(req, res) {
-    res.json({"message":"Endpoint not found. (404"});
+    res.json("Endpoint not found. (404)");
     res.status(404);
 })
 

@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "concurrently \"cd backend && node index.js\" \"cd frontend/project-atlas && npm start\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "concurrently \"cd backend && node index.js\" \"sleep 3 && curl -s http://localhost:5555/app/test/\"",
     "install": "cd frontend/project-atlas && npm install && cd ../../backend && npm install && cd ./controllers && pip3 install -r requirements.txt"
   },
   "repository": {

@@ -10,7 +10,7 @@ def getFDate(i: int, end_day: str) -> str:
     while str(data['date'][i]) != end_day:
         i = i - 1
     if str(data['date'][i]) == end_day:
-        i = i + 1
+        i = i + 2
     fDate = str(data['date'][i])
     return fDate
 
@@ -22,6 +22,8 @@ def getCode(name: str) -> str:
         name = "Virgin Islands (British)"
     if name == "Cape Verde":
         name = "Cabo Verde"
+    if name == "Cote d'Ivoire":
+        name = "Côte d'Ivoire"  
     if name == "Curacao":
         name = "Curaçao"
     if name == "Democratic Republic of Congo":

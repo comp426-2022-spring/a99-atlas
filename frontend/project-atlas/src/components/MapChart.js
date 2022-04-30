@@ -1,5 +1,4 @@
 import React, { memo, useState, useEffect } from "react";
-import { csv } from "d3-fetch";
 import { scaleLinear } from "d3-scale";
 import {
   ZoomableGroup,
@@ -18,12 +17,14 @@ const rounded = (num) => {
     return Math.round(num / 100000000) / 10 + "Bn";
   } else if (num > 1000000) {
     return Math.round(num / 100000) / 10 + "M";
-  } else {
+  } else if (num > 100) {
     return Math.round(num / 100) / 10 + "K";
+  } else {
+    return Math.round(num);
   }
 };
 
-const MapChart = ({ setTooltipContent, time, metric }) => {
+const MapChart = ({ setTooltipContent, time, metric, uid }) => {
   const [data, setData] = useState([]);
   const [min, setMin] = useState(0.29);
   const [max, setMax] = useState(0.68);
@@ -34,10 +35,6 @@ const MapChart = ({ setTooltipContent, time, metric }) => {
 
   useEffect(() => {
     async function fetchData(metric, time) {
-      // Dummy data if fetch doesn't work
-      csv(`/vulnerability.csv`).then((data) => {
-        setData(data);
-      });
       // Retrieve data from backend
       try {
         const requestOptions = {
@@ -51,14 +48,14 @@ const MapChart = ({ setTooltipContent, time, metric }) => {
           setMax(resp.data.max);
           setData(resp.data.data);
         } else {
-          throw Error("Unknown error occurred when getting map data from server");
+          throw Error(`The server gave status code: ${response.status}`);
         }
       } catch (error) {
         console.log(error);
       }
     }
     fetchData(metric, time);
-  }, [time, metric]);
+  }, [time, metric, uid]);
   
   return (
     <>

@@ -65,13 +65,13 @@ Good skill and be creative!
 ## Notes:
 ### Roles:
 1. Review Manager: Kush, Liam
-2. Plan Manager: Kunal
-3. Documentation Manager: Kunal
-4. Release Team: Kush, Liam, Kunal, Nathan, Kaan
-5. Project Manager: Kush
+2. Project Manager: Kush
+3. Plan Manager: Kunal
+4. Documentation Manager: Kunal
+5. Release Team: Kush, Liam, Kunal, Nathan, Kaan
 6. Front-end Lead: Kush
-7. Back-end Lead: Liam
-8. Database Lead: Nathan
+7. Back-end Lead: Nathan
+8. Database Lead: Liam
 9. Testing Team: Nathan, Kaan
 10. Miscellaneous Lead: Kaan
 11. Research Team: Kaan, Liam, Nathan
@@ -89,7 +89,7 @@ Back-end packages used:
 6. crypto
 7. better-sqlite3
 8. sqlite3
-9. python3 (requirement)
+9. **python3 (requirement)**
 10. cors
 11. nanoid
 
@@ -100,6 +100,7 @@ Front-end packages used:
 
 ### How to Run:
 1. First ensure you have python3 and pip3 installed along with the latest versions of node and npm
-2. Run "npm install" to install all packages and dependencies for the entire app
-3. Run "npm test" to ensure the backend can start
-4. Run "npm start" to start the app (both the backend and frontend)
+2. Run **npm install** to install all packages and dependencies for the entire app
+3. Run **npm test** to ensure the backend can start
+    - The server should start, create the databases if not created, listen on port 5555, give a success message, give a 404 message, and then shut down
+4. Run **npm start** to start the app (both the backend and frontend)
