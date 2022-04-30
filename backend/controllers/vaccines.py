@@ -102,4 +102,5 @@ if __name__ == "__main__":
     url = requests.get("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json")
     text = url.text 
     data = json.loads(text) # read in vaccine data JSON
-    main()
+    finaljson = main()
+    dbimport(finaljson, "vacc")
