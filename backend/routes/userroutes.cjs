@@ -166,7 +166,7 @@ router.get('/vaccinations/:id', (req, res) => {
 // })
 
 router.use(function(req, res) {
-    res.json({"message":"Endpoint not found. (404"});
+    res.json("Endpoint not found. (404)");
     res.status(404);
 })
 
