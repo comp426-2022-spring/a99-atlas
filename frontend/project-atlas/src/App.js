@@ -24,13 +24,13 @@ function App() {
       <AppBar position="static">
         <Toolbar sx={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between" }}>
           <Typography variant="h6" component="div" >
-            Project Atlas
+            Project Atlas - Covid Stats Atlas
           </Typography>
           <Dropdowns time={time} setTime={setTime} metric={metric} setMetric={setMetric}/>
           <Button color="inherit" onClick={() => setOpenAccount(true)}>Account</Button>
         </Toolbar>
       </AppBar>
-      <div className='map'><MapChart setTooltipContent={setContent} time={time} metric={metric} /> </div>
+      <div className='map'><MapChart setTooltipContent={setContent} time={time} metric={metric} uid={uid}/> </div>
       <ReactTooltip>{content}</ReactTooltip>
     </div>
   );
