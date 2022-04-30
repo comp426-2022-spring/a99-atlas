@@ -47,13 +47,6 @@ var userroutes = require('./routes/userroutes.cjs');
 
 app.use(express.json());
 
-app.get('/app/test', (req, res, next) => {
-    console.log("Server successfully started");
-    res.status(200);
-    server.close(function() { console.log('\nShutting down server...'); });
-    next();
-})
-
 app.use('/app',userroutes);
  
 process.on('SIGTERM', () => {
