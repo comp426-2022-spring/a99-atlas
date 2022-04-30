@@ -10,7 +10,7 @@ def getFDate(i: int, end_day: str) -> str:
     while str(data['date'][i]) != end_day:
         i = i - 1
     if str(data['date'][i]) == end_day:
-        i = i + 1
+        i = i + 2
     fDate = str(data['date'][i])
     return fDate
 

@@ -10,7 +10,7 @@ def getFDate(i: int, end_day: str) -> str:
     while str(data['date'][i]) != end_day:
         i = i - 1
     if str(data['date'][i]) == end_day:
-        i = i + 1
+        i = i + 2
     fDate = str(data['date'][i])
     return fDate
 
@@ -153,7 +153,7 @@ def main() -> Dict:
     start_day = end_day - relativedelta(days=30)
     finalDict['last30Days'] = parse(str(end_day), str(start_day))
 
-    #print(finalDict)
+    print(finalDict)
     return finalDict
 
 if __name__ == "__main__":
