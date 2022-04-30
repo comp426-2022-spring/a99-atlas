@@ -102,4 +102,5 @@ Front-end packages used:
 1. First ensure you have python3 and pip3 installed along with the latest versions of node and npm
 2. Run **npm install** to install all packages and dependencies for the entire app
 3. Run **npm test** to ensure the backend can start
+    - The server should start, create the databases if not created, listen on port 5555, give a success message, give a 404 message, and then shut down
 4. Run **npm start** to start the app (both the backend and frontend)
