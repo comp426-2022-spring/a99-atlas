@@ -132,6 +132,12 @@ router.get('/vaccinations/:id', (req, res) => {
     res.status(200).json(cases[0]);
 })
 
+router.get('/test', (req, res) => {
+    console.log("This is a test endpoint.")
+    res.status(200).json({"message": "Test successful. Exiting"})
+    process.exit(0)
+})
+
 // router.use( (req, res, next) => {
 //     let logdata = {
 //         remoteaddr: req.ip,
