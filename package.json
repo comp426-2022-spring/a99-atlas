@@ -2,7 +2,7 @@
   "name": "a99-atlas",
   "version": "1.0.0",
   "description": "Web app displaying an interactive map of covid statistics around the world",
-  "main": "index.js",
+  "main": "./backend/index.js",
   "directories": {
     "doc": "docs"
   },
