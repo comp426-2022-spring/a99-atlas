@@ -22,6 +22,8 @@ def getCode(name: str) -> str:
         name = "Virgin Islands (British)"
     if name == "Cape Verde":
         name = "Cabo Verde"
+    if name == "Cote d'Ivoire":
+        name = "Côte d'Ivoire"  
     if name == "Curacao":
         name = "Curaçao"
     if name == "Democratic Republic of Congo":
