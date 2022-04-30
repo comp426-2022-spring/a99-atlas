@@ -92,7 +92,7 @@ def main() -> Dict:
 
     days = 30
     finalDict['last30Days'] = parse(days)
-    print(finalDict)
+    ##print(finalDict)
     return finalDict
 
 if __name__ == "__main__":
