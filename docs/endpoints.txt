@@ -1,0 +1,90 @@
+Registers user in database
+app.post('/register')
+  Input: {email, password} in req.body
+  HTTP Return: 
+    200 OK if successful register
+    400 if Email in use or error
+  Body return:
+    Json with nanoid to identify user
+  
+Logs user in and checks if user valid in database
+app.post('/login')
+  Input: {email, password} in req.body
+  HTTP Return: 
+    200 OK if successful login
+    400 if email/password combination doesn't exist in database
+  Body return:
+    Json with nanoid to identify user
+
+Updates account info of user
+app.patch('/update/user/:id')
+  Input:
+    {email, password} in req.body
+    nanoid in req.params
+  HTTP Return:
+    200 OK if sucessful update
+  Body return:
+    Json with nanoid to identify user
+    
+Deletes user
+app.delete('/delete/user/:id')
+  Input:
+    nanoid in req.params
+  HTTP Return:
+    200 OK if sucessful update
+  Body return:
+    Json with nanoid to identify user
+    
+    
+Gets account info of user (just the email)
+app.get('/info/user/:id')
+  Input:
+    nanoid in req.params
+  HTTP Return:
+    200 OK if sucessful update
+  Body return:
+    Json with nanoid to identify user
+    
+Gets login history of user
+app.get('/history/user/:id')
+  Input:
+    nanoid in req.params
+  HTTP Return:
+    200 OK if sucessful update
+  Body return:
+    Json with times that user has logged in
+    
+Gets COVID cases of all countries from allTime, last30Days, last60Days
+app.get('/cases/:id')
+  Input:
+    time in req.params
+  HTTP Return:
+    200 OK if successful retrieval
+  Body return:
+    Json with {min, max, country: [data]}
+    
+    
+Gets COVID deaths of all countries from allTime, last30Days, last60Days
+app.get('/deaths/:id')
+  Input:
+    time in req.params
+  HTTP Return:
+    200 OK if successful retrieval
+  Body return:
+    Json with {min, max, country: [data]}
+    
+    
+Gets COVID cases of all countries from allTime, last30Days, last60Days
+app.get('/vaccinations/:id')
+  Input:
+    time in req.params
+  HTTP Return:
+    200 OK if successful retrieval
+  Body return:
+    Json with {min, max, country: [data]}
+    
+Test endpoint
+app.get('/test')
+  HTTP Return:
+    200 OK with message
+  Exits with process.exit(0)
