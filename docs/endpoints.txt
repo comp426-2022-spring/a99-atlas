@@ -61,8 +61,18 @@ app.get('/cases/:id')
   HTTP Return:
     200 OK if successful retrieval
   Body return:
-    Json with {min, max, country: [data]}
+    Json with {min, max, country: [data]}, example below
     
+    {
+      min: ###,
+      max: ###,
+      data: [
+        {countryCode: { name: ###, num: ###, reportDate1: YYYY-MM-DD}},
+        {countryCode: { name: ###, num: ###, reportDate1: YYYY-MM-DD}},
+          .....
+        {countryCode: { name: ###, num: ###, reportDate1: YYYY-MM-DD}}
+      ]
+    }
     
 Gets COVID deaths of all countries from allTime, last30Days, last60Days
 app.get('/deaths/:id')
@@ -71,8 +81,18 @@ app.get('/deaths/:id')
   HTTP Return:
     200 OK if successful retrieval
   Body return:
-    Json with {min, max, country: [data]}
+    Json with {min, max, country: [data]}, example below
     
+    {
+      min: ###,
+      max: ###,
+      data: [
+        {countryCode: { name: ###, num: ###, reportDate1: YYYY-MM-DD}},
+        {countryCode: { name: ###, num: ###, reportDate1: YYYY-MM-DD}},
+          .....
+        {countryCode: { name: ###, num: ###, reportDate1: YYYY-MM-DD}}
+      ]
+    }
     
 Gets COVID cases of all countries from allTime, last30Days, last60Days
 app.get('/vaccinations/:id')
@@ -81,7 +101,18 @@ app.get('/vaccinations/:id')
   HTTP Return:
     200 OK if successful retrieval
   Body return:
-    Json with {min, max, country: [data]}
+    Json with {min, max, country: [data]}, example below
+    
+    {
+      min: ###,
+      max: ###,
+      data: [
+        {countryCode: { name: ###, num: ###, reportDate1: YYYY-MM-DD}},
+        {countryCode: { name: ###, num: ###, reportDate1: YYYY-MM-DD}},
+          .....
+        {countryCode: { name: ###, num: ###, reportDate1: YYYY-MM-DD}}
+      ]
+    }
     
 Test endpoint
 app.get('/test')
