@@ -1,0 +1,2 @@
+Our planned and implemented json structure for the covid data being sent to the frontend from our apis is found at this github issue:
+https://github.com/comp426-2022-spring/a99-atlas/issues/9
