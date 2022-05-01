@@ -1,4 +1,4 @@
-For the backend portion of this assignment we used the cases.py, deaths.py, and vaccines.py to gather the information used in the
+For the backend portion of this assignment we used the cases.py, deaths.py, and vaccines.py (located at './backend/controllers') to gather the information used in the
 frontend from raw JSON files listed below:
 
 Vaccines: https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json
