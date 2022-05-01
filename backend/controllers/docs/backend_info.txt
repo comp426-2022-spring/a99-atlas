@@ -1,0 +1,22 @@
+For the backend portion of this assignment we used the cases.py, deaths.py, and vaccines.py to gather the information used in the
+frontend from raw JSON files listed below:
+
+Vaccines: https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json
+Deaths:https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/internal/megafile--deaths.json
+Cases: https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/internal/megafile--cases-tests.json
+
+Overview of code:
+Cases and deaths: These two basically work the same way where they take in the data from the JSON files, afterwards parse through these files
+to give us the data for the last 30 days, 6 months, 1 year, and all time. As it is parsing through the code has a function to keep track
+of the max and min used in the frontend to properly shade the countries accordingly. After this, these programs return the data that 
+looks like the link below:
+
+https://github.com/comp426-2022-spring/a99-atlas/issues/9
+
+
+Vaccines: This program is a tad bit different than the others but still have the same core principles. This program is different because 
+the original JSON file we were working with lacked data that corresponded with the others, so we had to use a different JSON that didnt 
+have as much discrepancy. Due to the formatting and a lack of info for the set days, we adjusted the code to parse through that data however 
+if the data we are looking for is not there for the points of comparison (today and 30 days ago, etc..) we would add a day and see if the data 
+we need was there and keep repeating until we got a match. The same concept of max and min are present as well and provides the data in the format
+given above.
